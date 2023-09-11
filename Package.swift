@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "Transit",
+  name: "Transit Express",
   products: [
     .library(name: "Transit", targets: ["Transit"])
   ],

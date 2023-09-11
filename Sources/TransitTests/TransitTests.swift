@@ -20,12 +20,24 @@ final class TransitTests: XCTestCase {
         print(route)
       }
     }
+      
+    if let stopTimes = feed.stopTimes {
+        for stopTime in stopTimes {
+          print(stopTime)
+        }
+      }
+      
     if let stops = feed.stops {
       for stop in stops {
-				print(stop)
+	print(stop)
       }
     }
   }
+    
+    
+    func test_keyPath() {
+        XCTAssertNil(nil)
+    }
 
 }
 
