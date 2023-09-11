@@ -21,15 +21,15 @@ final class TransitTests: XCTestCase {
       }
     }
       
-    if let routes = feed.stopTimes {
-        for route in routes {
-          print(route)
+    if let stopTimes = feed.stopTimes {
+        for stopTime in stopTimes {
+          print(stopTime)
         }
       }
       
     if let stops = feed.stops {
       for stop in stops {
-				print(stop)
+	print(stop)
       }
     }
   }
