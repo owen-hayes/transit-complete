@@ -160,6 +160,18 @@ extension String {
     })
   }
 
+    func hourToDateComponents() -> DateComponents {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let trimmed = self.trimmingCharacters(in: .whitespaces)
+        let date = dateFormatter.date(from: trimmed)!
+        var dc = DateComponents()
+        dc.hour = calendar.component(.hour, from: date)
+        dc.minute = calendar.component(.minute, from: date)
+        dc.second = calendar.component(.second, from: date)
+        return dc
+    }
   /**
    The `CGColor` representation of `self` or `nil` if `self` cannot be
 	 represented as a `CGColor`.
@@ -350,22 +362,20 @@ extension String {
  Set `self` as a value for an optional `Date` field in `instance`.
  - Tag: String-assignTimeZoneTo
  */
-func assignOptionalDateTo<InstanceType, FieldType>(
+func assignOptionalHourTo<InstanceType, FieldType>(
       _ instance: inout InstanceType,
       for field: FieldType)
 throws where FieldType: KeyPathVending {
-  guard let path = field.path as? WritableKeyPath<InstanceType, Date?>
+  guard let path = field.path as? WritableKeyPath<InstanceType, DateComponents?>
       else {
     throw TransitAssignError.invalidPath
   }
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "HH:mm:ss"
-      let trimmed = self.trimmingCharacters(in: .whitespaces)
-  guard let date = dateFormatter.date(from: trimmed)
+    let hour : Optional<DateComponents> = self.hourToDateComponents()
+    guard hour != nil
       else {
     throw TransitAssignError.invalidValue
   }
-  instance[keyPath: path] = date
+  instance[keyPath: path] = hour
 }
 
   /**

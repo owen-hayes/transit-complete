@@ -74,8 +74,8 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
 public struct StopTime: Hashable, Identifiable {
   public var id = UUID()
   public var tripID: TransitID = ""
-  public var arrival: Date?
-  public var departure: Date?
+  public var arrival: DateComponents?
+  public var departure: DateComponents?
   public var stopID: TransitID = ""
   public var stopSequenceNumber: UInt = 0
   public var stopHeadingSign: String?
@@ -89,8 +89,8 @@ public struct StopTime: Hashable, Identifiable {
 
   public init(
 		tripID: TransitID = "",
-		arrival: Date? = nil,
-		departure: Date? = nil,
+		arrival: DateComponents? = nil,
+		departure: DateComponents? = nil,
 		stopID: TransitID = "",
 		stopSequenceNumber: UInt = 0,
 		stopHeadingSign: String? = nil,
@@ -134,9 +134,9 @@ public struct StopTime: Hashable, Identifiable {
         case .stopSequenceNumber:
           try field.assignUIntTo(&self, for: header)
         case .arrival:
-            try field.assignOptionalDateTo(&self, for: header)
+            try field.assignOptionalHourTo(&self, for: header)
         case .departure:
-            try field.assignOptionalDateTo(&self, for: header)
+            try field.assignOptionalHourTo(&self, for: header)
         case .pickupType, .dropOffType,
              .continuousPickup, .continuousDropOff,
              .distanceTraveledForShape, .timePointType:
