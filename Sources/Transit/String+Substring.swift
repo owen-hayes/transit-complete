@@ -345,6 +345,28 @@ extension String {
     }
     instance[keyPath: path] = timeZone
   }
+    
+/**
+ Set `self` as a value for an optional `Date` field in `instance`.
+ - Tag: String-assignTimeZoneTo
+ */
+func assignOptionalDateTo<InstanceType, FieldType>(
+      _ instance: inout InstanceType,
+      for field: FieldType)
+throws where FieldType: KeyPathVending {
+  guard let path = field.path as? WritableKeyPath<InstanceType, Date?>
+      else {
+    throw TransitAssignError.invalidPath
+  }
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm:ss"
+      let trimmed = self.trimmingCharacters(in: .whitespaces)
+  guard let date = dateFormatter.date(from: trimmed)
+      else {
+    throw TransitAssignError.invalidValue
+  }
+  instance[keyPath: path] = date
+}
 
   /**
    - Tag: String-assignOptionalTimeZoneTo

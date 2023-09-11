@@ -133,7 +133,11 @@ public struct StopTime: Hashable, Identifiable {
           try field.assignOptionalStringTo(&self, for: header)
         case .stopSequenceNumber:
           try field.assignUIntTo(&self, for: header)
-        case .arrival, .departure, .pickupType, .dropOffType,
+        case .arrival:
+            try field.assignOptionalDateTo(&self, for: header)
+        case .departure:
+            try field.assignOptionalDateTo(&self, for: header)
+        case .pickupType, .dropOffType,
              .continuousPickup, .continuousDropOff,
              .distanceTraveledForShape, .timePointType:
           continue
@@ -203,8 +207,7 @@ public struct StopTimes: Identifiable {
 
       self.stopTimes.reserveCapacity(records.count - 1)
       for stopTimeRecord in records[1 ..< records.count] {
-        let stopTime = try StopTime(from: String(stopTimeRecord),
-																		using: headerFields)
+        let stopTime = try StopTime(from: String(stopTimeRecord), using: headerFields)
         self.add(stopTime)
       }
     } catch let error {

@@ -213,7 +213,7 @@ extension Route: Equatable {
   public static func == (lhs: Route, rhs: Route) -> Bool {
     return
       lhs.routeID == rhs.routeID &&
-      lhs.agencyID == rhs.agencyID &&
+      lhs.agencyID == rhs.agencyID && 
       lhs.name == rhs.name &&
       lhs.shortName == rhs.shortName &&
       lhs.details == rhs.details &&
