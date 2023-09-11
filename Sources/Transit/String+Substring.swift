@@ -160,17 +160,20 @@ extension String {
     })
   }
 
-    func hourToDateComponents() -> DateComponents {
+    func hourToDateComponents() -> DateComponents? {
         let calendar = Calendar.current
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"
         let trimmed = self.trimmingCharacters(in: .whitespaces)
-        let date = dateFormatter.date(from: trimmed)!
-        var dc = DateComponents()
-        dc.hour = calendar.component(.hour, from: date)
-        dc.minute = calendar.component(.minute, from: date)
-        dc.second = calendar.component(.second, from: date)
-        return dc
+        let date = dateFormatter.date(from: trimmed)
+        if (date != nil) {
+            var dc = DateComponents()
+            dc.hour = calendar.component(.hour, from: date!)
+            dc.minute = calendar.component(.minute, from: date!)
+            dc.second = calendar.component(.second, from: date!)
+            return dc
+        }
+        return nil
     }
   /**
    The `CGColor` representation of `self` or `nil` if `self` cannot be
