@@ -3,18 +3,18 @@
 import PackageDescription
 
 let package = Package(
-  name: "Transit Express",
+  name: "Transit Complete",
   products: [
-    .library(name: "Transit", targets: ["Transit"])
+    .library(name: "TransitOwen", targets: ["TransitOwen"])
   ],
   targets: [
     .target(
-      name: "Transit",
+      name: "TransitOwen",
       resources: []
 		),
     .testTarget(
       name: "TransitTests",
-      dependencies: ["Transit"],
+      dependencies: ["TransitOwen"],
       resources: [.process("Test Data")]
 		)
   ]

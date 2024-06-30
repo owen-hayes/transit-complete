@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import Transit
+@testable import TransitOwen
 
 final class AgencyTests: XCTestCase {
 

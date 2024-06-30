@@ -147,7 +147,7 @@ extension Trip: CustomStringConvertible {
 // MARK: - Trips
 
 /// - Tag: Trips
-public struct Trips: Identifiable {
+public struct Trips: Identifiable, Equatable {
   public let id = UUID()
   public var headerFields = [TripField]()
   fileprivate var trips = [Trip]()

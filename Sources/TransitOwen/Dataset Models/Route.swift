@@ -236,7 +236,7 @@ extension Route: CustomStringConvertible {
 // MARK: - Routes
 
 /// A representation of a complete Route dataset.
-public struct Routes: Identifiable {
+public struct Routes: Identifiable, Equatable {
   public let id = UUID()
   public var headerFields = [RouteField]()
 	public var routes: [Route] = []

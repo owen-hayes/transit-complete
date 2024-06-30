@@ -74,8 +74,10 @@ public enum StopTimeField: String, Hashable, KeyPathVending {
 public struct StopTime: Hashable, Identifiable {
   public var id = UUID()
   public var tripID: TransitID = ""
-  public var arrival: DateComponents?
-  public var departure: DateComponents?
+//  public var arrival: DateComponents?
+//  public var departure: DateComponents?
+    public var arrival: String = ""
+    public var departure: String = ""
   public var stopID: TransitID = ""
   public var stopSequenceNumber: UInt = 0
   public var stopHeadingSign: String?
@@ -89,8 +91,8 @@ public struct StopTime: Hashable, Identifiable {
 
   public init(
 		tripID: TransitID = "",
-		arrival: DateComponents? = nil,
-		departure: DateComponents? = nil,
+		arrival: String = "",
+		departure: String = "",
 		stopID: TransitID = "",
 		stopSequenceNumber: UInt = 0,
 		stopHeadingSign: String? = nil,
@@ -119,8 +121,11 @@ public struct StopTime: Hashable, Identifiable {
 		from record: String,
 		using headers: [StopTimeField]
 	) throws {
+//        print("Trying a stop time!")
+//        print(record)
     do {
       let fields = try record.readRecord()
+//        print(fields)
       if fields.count != headers.count {
         throw TransitError.headerRecordMismatch
       }
@@ -134,9 +139,10 @@ public struct StopTime: Hashable, Identifiable {
         case .stopSequenceNumber:
           try field.assignUIntTo(&self, for: header)
         case .arrival:
-            try field.assignOptionalHourTo(&self, for: header)
+//            print(field)
+            try field.assignStringTo(&self, for: header)
         case .departure:
-            try field.assignOptionalHourTo(&self, for: header)
+            try field.assignStringTo(&self, for: header)
         case .pickupType, .dropOffType,
              .continuousPickup, .continuousDropOff,
              .distanceTraveledForShape, .timePointType:
@@ -168,7 +174,7 @@ extension StopTime: CustomStringConvertible {
 // MARK: - StopTimes
 
 /// - Tag: StopTimes
-public struct StopTimes: Identifiable {
+public struct StopTimes: Identifiable, Equatable {
   public let id = UUID()
   public var headerFields = [StopTimeField]()
   fileprivate var stopTimes = [StopTime]()

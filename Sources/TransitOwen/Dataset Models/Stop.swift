@@ -231,7 +231,7 @@ extension Stop: CustomStringConvertible {
 // MARK: - Stops
 
 /// A representation of a complete Stops dataset.
-public struct Stops: Identifiable {
+public struct Stops: Identifiable, Equatable {
   public let id = UUID()
   public var headerFields = [StopField]()
   public var stops = [Stop]()
@@ -271,7 +271,7 @@ public struct Stops: Identifiable {
       self.stops.reserveCapacity(records.count - 1)
       for stopRecord in records[1 ..< records.count] {
         let stop = try Stop(from: String(stopRecord), using: headerFields)
-				print(stop)
+//				print(stop)
         self.add(stop)
       }
     } catch let error {

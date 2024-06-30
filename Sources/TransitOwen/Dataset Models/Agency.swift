@@ -72,7 +72,7 @@ public struct Agency: Hashable, Identifiable {
   /// The full name of the agency.
   public var name: String = ""
   /// Agency URL.
-  public var url: URL = URL(string: "https://unnamed.com")!
+  public var url: URL?
   /// Agency time zone.
   public var timeZone: TimeZone = TimeZone(identifier: "UTC")!
   /// Agency locale.
@@ -137,7 +137,7 @@ public struct Agency: Hashable, Identifiable {
         case .agencyID, .phone, .email:
           try field.assignOptionalStringTo(&self, for: header)
         case .url:
-          try field.assignURLValueTo(&self, for: header)
+          try field.assignOptionalURLTo(&self, for: header)
         case .fareURL:
           try field.assignOptionalURLTo(&self, for: header)
         case .locale:
@@ -190,7 +190,7 @@ extension Agency: CustomDebugStringConvertible {
 // MARK: - Agencies
 
 /// A representation of a complete Agency dataset.
-public struct Agencies: Identifiable, RandomAccessCollection {
+public struct Agencies: Identifiable, RandomAccessCollection, Equatable {    
 	public var startIndex: Int = 0
 	
 	public var endIndex: Int = 0
@@ -254,6 +254,7 @@ public struct Agencies: Identifiable, RandomAccessCollection {
 
   /// Initialize agencies dataset from file.
   public init(from url: URL) throws {
+      
     do {
       let records = try String(contentsOf: url).splitRecords()
 
@@ -268,7 +269,9 @@ public struct Agencies: Identifiable, RandomAccessCollection {
         self.add(agency)
       }
     } catch let error {
-			print(self)
+//			print(self)
+        
+        print(error)
       throw error
     }
   }
